@@ -7,6 +7,8 @@ WORKDIR /app
 # Copies application code to the container
 COPY . /app
 
+LABEL org.opencontainers.image.source https://github.com/ewsmyth/quizme
+
 # Installs the dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
