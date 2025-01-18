@@ -1,19 +1,26 @@
 # Official Python Image
 FROM python:3.9-slim
 
+# Install Docker CLI and dependencies
+RUN apt-get update && apt-get install -y docker.io
+
 # Working directory
 WORKDIR /app
 
-# Copies application code to the container
-COPY . /app
+# Copy requirements file
+COPY requirements.txt .
 
-LABEL org.opencontainers.image.source https://github.com/ewsmyth/quizme
-
-# Installs the dependencies from requirements.txt
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exposed port
+# Copy application code
+COPY . .
+
+# Add GitHub repository label
+LABEL org.opencontainers.image.source="https://github.com/ewsmyth/quizme"
+
+# Expose Flask app port
 EXPOSE 6678
 
-# Runs the Flask app
+# Run the Flask app
 CMD ["python", "main.py"]
