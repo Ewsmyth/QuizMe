@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 import subprocess
+import time
 
 update = Blueprint('update', __name__)
 
@@ -20,7 +21,17 @@ def update_app():
         if current_container_name:
             subprocess.run(['docker', 'rm', '-f', current_container_name], check=True)
 
-        # Clean up any stopped containers (optional, for tidiness)
+        # Wait for a short period to ensure the port is released
+        time.sleep(2)
+
+        # Check if the port is free
+        check_port = subprocess.run(['lsof', '-i:6678'], capture_output=True, text=True)
+        if check_port.stdout:
+            # If the port is still in use, kill the process
+            port_process = check_port.stdout.split()[1]
+            subprocess.run(['kill', '-9', port_process], check=True)
+
+        # Clean up stopped containers
         subprocess.run(['docker', 'container', 'prune', '-f'], check=True)
 
         # Start a new container
