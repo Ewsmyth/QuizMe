@@ -1,8 +1,8 @@
 # Official Python Image
 FROM python:3.9-slim
 
-# Install Docker CLI and dependencies
-RUN apt-get update && apt-get install -y docker.io
+# Install necessary tools
+RUN apt-get update && apt-get install -y docker.io lsof
 
 # Working directory
 WORKDIR /app
