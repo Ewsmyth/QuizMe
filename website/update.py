@@ -28,9 +28,15 @@ def update_app():
         if check_port.stdout:
             print("Port 6678 is in use. Cleaning up...")
             lines = check_port.stdout.strip().split('\n')
-            for line in lines:
-                port_process = line.split()[1]
-                subprocess.run(['kill', '-9', port_process], check=True)
+            for line in lines[1:]:  # Skip the first line if it's a header
+                columns = line.split()
+                if len(columns) > 1:  # Ensure there are enough columns to extract PID
+                    port_process = columns[1]  # PID is usually in the second column
+                    print(f"Killing process with PID: {port_process}")
+                    subprocess.run(['kill', '-9', port_process], check=True)
+                else:
+                    print(f"Skipping invalid line: {line}")
+
 
         time.sleep(1)
 
