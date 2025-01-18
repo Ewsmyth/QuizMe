@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Install necessary tools
-RUN apt-get update && apt-get install -y docker.io lsof
+RUN apt-get update && apt-get install -y docker.io lsof procps
 
 # Working directory
 WORKDIR /app
