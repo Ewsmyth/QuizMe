@@ -20,8 +20,8 @@ def update_app():
         if current_container_name:
             subprocess.run(['docker', 'rm', '-f', current_container_name], check=True)
 
-        # Ensure the port is free by stopping any conflicting containers
-        subprocess.run(['docker', 'prune', '-f'], check=True)
+        # Clean up any stopped containers (optional, for tidiness)
+        subprocess.run(['docker', 'container', 'prune', '-f'], check=True)
 
         # Start a new container
         new_container_name = current_container_name or 'quizme'
