@@ -25,5 +25,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/Ewsmyth/quizme:latest
-            ghcr.io/Ewsmyth/quizme:${{ github.sha }}
+            ghcr.io/ewsmyth/quizme:latest
+            ghcr.io/ewsmyth/quizme:${{ github.sha }}
