@@ -6,19 +6,22 @@ update = Blueprint('update', __name__)
 @update.route('/update', methods=['POST'])
 def update_app():
     try:
-        # Pull the latest image
+        # Pull the latest Docker image
         subprocess.run(['docker', 'pull', 'ghcr.io/ewsmyth/quizme:latest'], check=True)
 
-        # Get the current container name
+        # Get the name of the currently running container
         result = subprocess.run(
             ['docker', 'ps', '--filter', 'ancestor=ghcr.io/ewsmyth/quizme:latest', '--format', '{{.Names}}'],
             check=True, text=True, capture_output=True
         )
         current_container_name = result.stdout.strip()
 
-        # Stop and remove the existing container
+        # Stop and remove the existing container if it exists
         if current_container_name:
             subprocess.run(['docker', 'rm', '-f', current_container_name], check=True)
+
+        # Ensure the port is free by stopping any conflicting containers
+        subprocess.run(['docker', 'prune', '-f'], check=True)
 
         # Start a new container
         new_container_name = current_container_name or 'quizme'
@@ -28,10 +31,7 @@ def update_app():
             'ghcr.io/ewsmyth/quizme:latest'
         ]
 
-        # Log the command for debugging
-        print("Running command:", " ".join(run_command))
-
-        # Execute the command
+        print("Running command:", " ".join(run_command))  # Debugging output
         subprocess.run(run_command, check=True)
 
         return jsonify({'status': 'success', 'message': f'Updated and started container: {new_container_name}'}), 200
