@@ -1,34 +1,42 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 import subprocess
-import json
 
 update = Blueprint('update', __name__)
 
 @update.route('/update', methods=['POST'])
 def update_app():
     try:
-        # Detect the currently running container for the image
+        # Pull the latest image
+        subprocess.run(['docker', 'pull', 'ghcr.io/ewsmyth/quizme:latest'], check=True)
+
+        # Get the current container name
         result = subprocess.run(
             ['docker', 'ps', '--filter', 'ancestor=ghcr.io/ewsmyth/quizme:latest', '--format', '{{.Names}}'],
             check=True, text=True, capture_output=True
         )
         current_container_name = result.stdout.strip()
 
-        # If no container is running, skip stopping and removing
+        # Stop and remove the existing container
         if current_container_name:
-            # Stop and remove the existing container
             subprocess.run(['docker', 'rm', '-f', current_container_name], check=True)
 
-        # Determine a new container name or reuse the old one
+        # Start a new container
         new_container_name = current_container_name or 'quizme'
-
-        # Start a new container with the updated image
-        subprocess.run([
-            'docker', 'run', '-d', '--name', new_container_name, '-p', '6678:6678',
+        run_command = [
+            'docker', 'run', '-d', '--name', new_container_name,
+            '-p', '6678:6678', '-v', '/var/run/docker.sock:/var/run/docker.sock',
             'ghcr.io/ewsmyth/quizme:latest'
-        ], check=True)
+        ]
 
-        return jsonify({'status': 'success', 'message': f'Updated to the latest version. Container: {new_container_name}'}), 200
+        # Log the command for debugging
+        print("Running command:", " ".join(run_command))
+
+        # Execute the command
+        subprocess.run(run_command, check=True)
+
+        return jsonify({'status': 'success', 'message': f'Updated and started container: {new_container_name}'}), 200
 
     except subprocess.CalledProcessError as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        error_message = f"Command '{e.cmd}' failed with error: {e.stderr or e.output}"
+        print(error_message)
+        return jsonify({'status': 'error', 'message': error_message}), 500
