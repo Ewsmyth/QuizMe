@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: quizme
+    ports:
+      - "6678:6678"
+    environment:
+      - SECRET_KEY=changeme
