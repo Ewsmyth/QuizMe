@@ -3,7 +3,6 @@ from sqlalchemy.exc import OperationalError
 from flask import Flask
 from flask_login import LoginManager
 from . import config
-
 from .models import db, User
 from .utils import create_admin_user, create_roles
 

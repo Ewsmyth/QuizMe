@@ -6,7 +6,7 @@ from datetime import timedelta, datetime
 
 bcrypt = Bcrypt()
 
-def create_role():
+def create_roles():
     """Creates default roles"""
     try:
         # Check if roles already exist
