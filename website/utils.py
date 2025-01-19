@@ -1,8 +1,5 @@
-from flask import current_app
-from . import config
 from flask_bcrypt import Bcrypt
 from .models import db, User, Role
-from datetime import timedelta, datetime
 
 bcrypt = Bcrypt()
 

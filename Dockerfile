@@ -1,9 +1,6 @@
 # Official Python Image
 FROM python:3.9-slim
 
-# Installs Docker CLI
-RUN apt-get update && apt-get install -y
-
 # Working directory
 WORKDIR /app
 

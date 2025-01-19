@@ -56,7 +56,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U quizme-admin"]
+      test: ["CMD-SHELL", "pg_isready -U quizme-admin -d quizme-data"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -66,8 +66,8 @@ services:
     ports:
       - "6678:6678"
     environment:
-      - DATABASE_URI=postgresql://quizme-admin:password@db:5432/quizme-data
       - SECRET_KEY=aabbccddeeffgghhiijjkkllmmnnoopp00112233445566778899
+      - DATABASE_URL=postgresql://quizme-admin:password@db:5432/quizme-data
     depends_on:
       - db
 

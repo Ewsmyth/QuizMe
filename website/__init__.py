@@ -1,23 +1,17 @@
 import time
-from sqlalchemy.exc import OperationalError
 from flask import Flask
-from flask_login import LoginManager
 from . import config
 from .models import db, User
-from .utils import create_admin_user, create_roles
+from flask_login import LoginManager
+from .utils import create_roles, create_admin_user
 
 def create_app():
     app = Flask(__name__)
 
-    # Load configuration settings from config.py
-    app.config['SECRET_KEY'] = config.SECRET_KEY
+    # Load configuration settings
+    app.config.from_object(config)
 
-    # Load configuration for database
-    app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
-    print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
-
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
+    # Intialize database
     db.init_app(app)
 
     # Setup Flask-Login manager
@@ -37,26 +31,20 @@ def create_app():
     app.register_blueprint(user)
     app.register_blueprint(admin)
 
-    max_retries = 5
-    for attempt in range(max_retries):
-        try:
-            with app.app_context():
-                # Initialize database tables
-                db.create_all()
-                print("Database tables initialized successfully.")
-                # Ensure roles are created
+    # Wait for the database to be ready
+    with app.app_context():
+        for _ in range(10):  # Retry 10 times
+            try:
+                print("Attempting to initialize the database...")
+                db.create_all()  # Initialize database tables
                 create_roles()
-                # Create admin user
                 create_admin_user()
-            break
-        except OperationalError as e:
-            print(f"Attempt {attempt + 1} failed with error: {e}")
-            if attempt < max_retries - 1:
-                wait_time = 2 ** attempt
-                print(f"Retrying in {wait_time} seconds...")
-                time.sleep(wait_time)
-            else:
-                print("Max retries reached. Raising exception.")
-                raise e
+                print("Database initialization complete.")
+                break
+            except Exception as e:
+                print(f"Database not ready. Retrying in 5 seconds... ({e})")
+                time.sleep(5)
+        else:
+            print("Failed to initialize the database after 10 attempts.")
 
     return app
