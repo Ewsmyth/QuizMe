@@ -14,6 +14,8 @@ def create_app():
 
     # Load configuration for database
     app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
+    print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
+
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     db.init_app(app)
