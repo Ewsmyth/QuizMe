@@ -43,16 +43,20 @@ def create_app():
             with app.app_context():
                 # Initialize database tables
                 db.create_all()
+                print("Database tables initialized successfully.")
                 # Ensure roles are created
                 create_roles()
                 # Create admin user
                 create_admin_user()
             break
         except OperationalError as e:
+            print(f"Attempt {attempt + 1} failed with error: {e}")
             if attempt < max_retries - 1:
                 wait_time = 2 ** attempt
+                print(f"Retrying in {wait_time} seconds...")
                 time.sleep(wait_time)
             else:
+                print("Max retries reached. Raising exception.")
                 raise e
 
     return app
