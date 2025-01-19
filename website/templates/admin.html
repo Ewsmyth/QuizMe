@@ -13,26 +13,5 @@
   <a href="{{ url_for('user.user_page') }}">User</a>
   <br>
   <a href="{{ url_for('auth.auth_page') }}">Auth</a>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <button id="updateButton">Update to Latest Version</button>
-  <script>
-    document.getElementById('updateButton').addEventListener('click', async () => {
-      const response = await fetch('/update', { method: 'POST' });
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(data.message);
-      } else {
-        alert('Error: ' + data.message)
-      }
-    })
-  </script>
 </body>
 </html>

@@ -11,11 +11,9 @@ def create_app():
     from .auth import auth
     from .user import user
     from .admin import admin
-    from .update import update
 
     app.register_blueprint(auth)
     app.register_blueprint(user)
     app.register_blueprint(admin)
-    app.register_blueprint(update)
 
     return app
