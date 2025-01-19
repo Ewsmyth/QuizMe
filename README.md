@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
 
-  quizme:
+  web-app:
     image: ghcr.io/ewsmyth/quizme:latest
     ports:
       - "6678:6678"
@@ -33,5 +33,4 @@ services:
 
 volumes:
   postgres-data:
-
 ```
