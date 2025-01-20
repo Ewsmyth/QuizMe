@@ -2,6 +2,10 @@ from flask import Blueprint, render_template, url_for
 
 admin = Blueprint('admin', __name__)
 
-@admin.route('/admin/')
-def admin_page():
-    return render_template('admin.html')
+@admin.route('/admin-home/')
+def admin_home():
+    return render_template('admin-home.html')
+
+@admin.route('/admin-welcome/')
+def admin_welcome():
+    return render_template('admin-welcom.html')

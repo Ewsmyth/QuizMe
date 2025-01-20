@@ -3,7 +3,13 @@ from flask import Flask
 from . import config
 from .models import db, User
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from .utils import create_roles, create_admin_user
+
+csrf = CSRFProtect()  # Initialize CSRF protection
+limiter = Limiter(get_remote_address, default_limits=["200 per day", "50 per hour"])  # Initialize rate limiter
 
 def create_app():
     app = Flask(__name__)
@@ -11,7 +17,13 @@ def create_app():
     # Load configuration settings
     app.config.from_object(config)
 
-    # Intialize database
+    # Initialize CSRF protection
+    csrf.init_app(app)
+
+    # Initialize rate limiter
+    limiter.init_app(app)
+
+    # Initialize database
     db.init_app(app)
 
     # Setup Flask-Login manager

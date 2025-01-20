@@ -13,5 +13,25 @@
   <a href="{{ url_for('user.user_page') }}">User</a>
   <br>
   <a href="{{ url_for('admin.admin_page') }}">Admin</a>
+  <br>
+  <br>
+  <br>
+  <div>
+    <h3>Login</h3>
+    <form action="{{ url_for('auth.auth_login') }}" method="POST">
+      {{ csrf_token() }}
+      <div>
+        <label for="email-fr-usr">Email:</label>
+        <input type="email" name="email-fr-usr" id="email-fr-usr" required placeholder="Email">
+      </div>
+      <div>
+        <label for="password-fr-usr">Password:</label>
+        <input type="password" name="password-fr-usr" id="password-fr-usr" required placeholder="Password">
+      </div>
+      <div>
+        <input type="submit" value="Login">
+      </div>
+    </form>
+  </div>
 </body>
 </html>
