@@ -8,9 +8,14 @@ from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from .utils import create_roles, create_admin_user
+from redis import Redis
 
 csrf = CSRFProtect()  # Initialize CSRF protection
-limiter = Limiter(get_remote_address, default_limits=["200 per day", "50 per hour"])  # Initialize rate limiter
+limiter = Limiter(
+    get_remote_address, 
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="redis://redis:6379"
+)  # Initialize rate limiter
 
 def create_app():
     app = Flask(__name__)
@@ -29,8 +34,7 @@ def create_app():
 
     # Setup MongoDB client
     mongo_client = MongoClient(app.config["MONGO_URI"])
-    app.mongo_client = mongo_client  # Attach the client to the app instance
-    app.mongo_db = mongo_client.get_database()  # Default database
+    app.mongo_db = mongo_client[app.config["MONGO_DB_NAME"]] # Default database
 
     # Setup Flask-Login manager
     login_manager = LoginManager(app)
@@ -43,7 +47,8 @@ def create_app():
     # Make MongoDB available via `g` object during requests
     @app.before_request
     def before_request():
-        g.mongo_db = app.mongo_db
+        if not hasattr(g, 'mongo_db'):
+            g.mongo_db = app.mongo_db
 
     # Import and register blueprints
     from .auth import auth

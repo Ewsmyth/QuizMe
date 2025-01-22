@@ -16,5 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Exposed port
 EXPOSE 6678
 
-# Runs the Flask app
-CMD ["python", "main.py"]
+# Command to run Gunicorn WSGI server
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:6678", "wsgi:app"]

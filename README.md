@@ -75,6 +75,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
   web-app:
     image: ghcr.io/ewsmyth/quizme:latest
@@ -84,6 +89,7 @@ services:
       - SECRET_KEY=aabbccddeeffgghhiijjkkllmmnnoopp00112233445566778899
       - DATABASE_URL=postgresql://quizme-admin:password@db:5432/quizme-data
       - MONGO_URL=mongodb://root:password@mongo:27017
+      - MONGO_DB=quizme-mongo
     depends_on:
       - db
       - mongo

@@ -6,3 +6,5 @@ Flask-Bcrypt
 Flask-WTF
 Flask-Limiter
 pymongo
+redis
+gunicorn
