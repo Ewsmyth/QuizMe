@@ -70,12 +70,12 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    healthcheck:
-      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })'"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      
+    # healthcheck:
+      # test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })'"]
+      # interval: 10s
+      # timeout: 5s
+      # retries: 5
+
   redis:
     image: redis:latest
     ports:
@@ -90,6 +90,7 @@ services:
       - DATABASE_URL=postgresql://quizme-admin:password@db:5432/quizme-data
       - MONGO_URL=mongodb://root:password@mongo:27017
       - MONGO_DB=quizme-mongo
+      - GLIBC_TUNABLES=glibc.pthread.rseq=0
     depends_on:
       - db
       - mongo
