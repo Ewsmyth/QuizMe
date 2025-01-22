@@ -61,6 +61,21 @@ services:
       timeout: 5s
       retries: 5
 
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web-app:
     image: ghcr.io/ewsmyth/quizme:latest
     ports:
@@ -68,9 +83,12 @@ services:
     environment:
       - SECRET_KEY=aabbccddeeffgghhiijjkkllmmnnoopp00112233445566778899
       - DATABASE_URL=postgresql://quizme-admin:password@db:5432/quizme-data
+      - MONGO_URL=mongodb://root:password@mongo:27017
     depends_on:
       - db
+      - mongo
 
 volumes:
   postgres-data:
+  mongo-data:
 ```

@@ -1,5 +1,6 @@
 import time
-from flask import Flask
+from flask import Flask, g
+from pymongo import MongoClient
 from . import config
 from .models import db, User
 from flask_login import LoginManager
@@ -26,6 +27,11 @@ def create_app():
     # Initialize database
     db.init_app(app)
 
+    # Setup MongoDB client
+    mongo_client = MongoClient(app.config["MONGO_URI"])
+    app.mongo_client = mongo_client  # Attach the client to the app instance
+    app.mongo_db = mongo_client.get_database()  # Default database
+
     # Setup Flask-Login manager
     login_manager = LoginManager(app)
     login_manager.login_view = 'auth.auth_login'
@@ -33,6 +39,11 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
+
+    # Make MongoDB available via `g` object during requests
+    @app.before_request
+    def before_request():
+        g.mongo_db = app.mongo_db
 
     # Import and register blueprints
     from .auth import auth
