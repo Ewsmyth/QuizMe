@@ -1,0 +1,319 @@
+:root {
+    --search-bar-bg-color: #f4f5f6;
+    --search-bar-icon-color: #808893;
+    --search-bar-text-color: #212327;
+    --search-bar-reset-btn-text-color: #006fff;
+    --search-bar-reset-btn-hover-text-color: #338bff;
+    --toggle-column-btn-bg-hover-color: #f6f6f7;
+    --toggle-column-btn-icon-color: #838691;
+    --table-header-text-icon-color: #212327;
+    --table-header-sorted-text-icon-color: #006fff;
+    --table-border-bottom-color: #efeff0;
+    --table-body-text-color: #50565e;
+    --mission-owner-body-text-color: #006fff;
+    --below-table-footer-text-color: #838691;
+    --table-length-select-bg-color: #ffffff;
+    --paginate-bg-color: #f4f5f6;
+    --paginate-btn-current-bg-color: #ffffff;
+    --paginate-btn-current-text-color: #006fff;
+    --column-select-popup-bg-color: #f9fafa;
+    --column-popup-banner-svg-text-color: #212327;
+    --column-popup-banner-close-color: #676f79;
+    --column-popup-banner-close-hover-bg-color: #f0f1f2;
+    --column-popup-list-bg-color: #ffffff;
+    --column-list-item-name-color: #50565e;
+    --column-list-item-hover-bg-color: #fbfbfb;
+    --column-list-box-shadow-color1: #2123271f;
+    --column-list-box-shadow-color2: #21232714;
+    --record-slider-svg-color: #676f79;
+    --record-slider-title-text-color: #212327;
+}
+body.dark-mode {
+    --search-bar-bg-color: #282b2f;
+    --search-bar-icon-color: #b7bcc2;
+    --search-bar-text-color: #f8f9f9;
+    --search-bar-reset-btn-text-color: #4796fe;
+    --search-bar-reset-btn-hover-text-color: #277ff1;
+    --toggle-column-btn-bg-hover-color: #1c1d1f;
+    --toggle-column-btn-icon-color: #babbbf;
+    --table-header-text-icon-color: #f9fafa;
+    --table-header-sorted-text-icon-color: #4797ff;
+    --table-border-bottom-color: #232526;
+    --table-body-text-color: #dee0e3;
+    --mission-owner-body-text-color: #4797ff;
+    --below-table-footer-text-color: #babbbf;
+    --table-length-select-bg-color: #131416;
+    --paginate-bg-color: #282b2f;
+    --paginate-btn-current-bg-color: #131416;
+    --paginate-btn-current-text-color: #4797ff;
+    --column-select-popup-bg-color: #131416;
+    --column-popup-banner-svg-text-color: #f9fafa;
+    --column-popup-banner-close-color: #cbced2;
+    --column-popup-banner-close-hover-bg-color: #1c1d1f;
+    --column-popup-list-bg-color: #1c1e21;
+    --column-list-item-name-color: #dee0e3;
+    --column-list-item-hover-bg-color: #202225;
+    --column-list-box-shadow-color1: #000000;
+    --column-list-box-shadow-color2: #21232714;
+    --record-slider-svg-color: #cbced2;
+    --record-slider-title-text-color: #f9fafa;
+}
+/* Styling for the above table header */
+.above-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 15px 0;
+}
+#myTable_filter {
+    display: flex;
+    align-items: center;
+    background-color: var(--search-bar-bg-color);
+    padding: 0;
+    border-radius: 7px;
+    position: relative;
+}
+table tbody tr {
+    cursor: pointer;
+}
+#searchBarIcon {
+    fill: var(--search-bar-icon-color);
+    position: absolute;
+    left: 5px;
+    cursor: pointer;
+}
+#myTable_filter input {
+    padding: 0 46px 0 30px;
+    height: 32px;
+    border-radius: 7px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 18rem;
+    color: var(--search-bar-text-color);
+    font-size: 14px;
+}
+.reset-button {
+    background-color: transparent;
+    border: none;
+    color: var(--search-bar-reset-btn-text-color);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 5px;
+    position: absolute;
+    right: 0;
+}
+.reset-button:hover {
+    color: var(--search-bar-reset-btn-hover-text-color);
+}
+
+/* Column toggle popup menu */
+.toggle-column-menu-btn {
+    position: fixed;
+    top: 100px;
+    right: 70px;
+    transform: translateY(-50%);
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    z-index: 1;
+    transition: opactiy 0.3s;
+}
+.toggle-column-menu {
+    position: fixed;
+    top: 0;
+    right: -18%;
+    width: 18%;
+    height: 100%;
+    transition: right 0.3s ease;
+    z-index: 2;
+    background-color: var(--create-user-portal-bg-color);
+}
+.toggle-column-menu.open {
+    right: 0;
+}
+.toggle-column-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.toggle-column-menu ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.toggle-column-menu ul li label {
+    cursor: pointer;
+}
+
+
+
+/* Styling for the thead wrapping div */
+.dataTables_scrollHeadInner {
+    border-bottom: 1px solid var(--table-border-bottom-color);
+}
+.dataTables_scroll {
+    overflow-y: auto;
+}
+table {
+    border-collapse: collapse;
+}
+
+/* Table head styling */
+.sortingCell_div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 4px;
+}
+.sortingCell_title {
+    font-size: 14px;
+}
+.sortingCell_iconWrapper {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sortingCell_icon {
+    display: none;
+}
+.sortingCell_div:hover .sortingCell_icon {
+    display: block;
+}
+/* Default unsorted state: hide the icon */
+table.dataTable thead > tr > th .sortingCell_icon {
+    display: none;
+    transition: transform 0.3s ease; /* Smooth rotation over 0.3 seconds */
+}
+/* Show the up arrow for ascending order */
+table.dataTable thead > tr > th.sorting_asc .sortingCell_icon {
+    display: inline-block;
+    transform: rotate(0); /* Arrow pointing up */
+}
+/* Show the down arrow for descending order */
+table.dataTable thead > tr > th.sorting_desc .sortingCell_icon {
+    display: inline-block;
+    transform: rotate(180deg); /* Arrow pointing down */
+}
+/* Default styling for unsorted columns */
+table.dataTable thead > tr > th {
+    color: var(--table-header-text-icon-color); /* Default text color */
+    transition: color 0.3s ease;
+}
+/* Style for sorted columns */
+table.dataTable thead > tr > th.sorting_asc,
+table.dataTable thead > tr > th.sorting_desc {
+    color: var(--table-header-sorted-text-icon-color); /* Set text color for sorted columns */
+    transition: fill 0.3s ease;
+}
+/* SVG icon color for sorted columns */
+table.dataTable thead > tr > th.sorting_asc .sortingCell_icon,
+table.dataTable thead > tr > th.sorting_desc .sortingCell_icon {
+    fill: var(--table-header-sorted-text-icon-color); /* Set SVG color for sorted columns */
+}
+
+
+td {
+    padding: 4px;
+}
+td {
+    border-bottom: 1px solid var(--table-border-bottom-color);
+    font-size: 14px;
+    color: var(--table-body-text-color);
+    overflow-x: hidden;
+    text-wrap: nowrap;
+}
+#missionOwnerColumn {
+    color: var(--mission-owner-body-text-color);
+}
+
+
+/* Styling for the below table footer */
+.below-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0 0 0;
+}
+.footer-left-side {
+    display: flex;
+    flex-direction: column;
+}
+.dataTables_info {
+    font-size: 12px;
+    color: var(--below-table-footer-text-color);
+}
+.dataTables_length {
+    margin: 8px 0 0 0;
+}
+.dataTables_length label {
+    color: var(--below-table-footer-text-color);
+    font-size: 12px;
+}
+.dataTables_length label select {
+    color: var(--below-table-footer-text-color);
+    background-color: transparent;
+    border: none;
+    font-size: 12px;
+    outline: none;
+}
+.dataTables_length label select:focus {
+    background-color: var(--table-length-select-bg-color);
+}
+
+.dataTables_paginate {
+    display: flex;
+    align-items: center;
+    margin: 0 40px 0 0;
+}
+.dataTables_paginate a {
+    font-size: 14px;
+    color: var(--below-table-footer-text-color);
+    cursor: pointer;
+}
+.previous {
+    margin: 0 25px 0 0;
+    font-weight: 700;
+}
+.previous:hover {
+    color: var(--paginate-btn-current-text-color);
+}
+.next {
+    margin: 0 0 0 6px;
+    font-weight: 700;
+}
+.next:hover {
+    color: var(--paginate-btn-current-text-color);
+}
+.dataTables_paginate span {
+    background-color: var(--paginate-bg-color);
+    border-radius: 15px;
+    display: flex;
+    height: 32px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.paginate_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    transition: color 0.3s ease;
+}
+.paginate_button.current {
+    background-color: var(--paginate-btn-current-bg-color);
+    color: var(--paginate-btn-current-text-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.content {
+    overflow-y: auto;
+}
+.dataTables_scrollHead {
+    position: sticky;
+}

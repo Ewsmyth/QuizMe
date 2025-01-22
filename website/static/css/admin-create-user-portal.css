@@ -1,0 +1,57 @@
+:root {
+    --create-user-portal-bg-color: #f9fafa;
+}
+body.dark-mode {
+    --create-user-portal-bg-color: #131416;
+}
+.create-user-portal-show-btn {
+    position: fixed;
+    top: 100px;
+    right: 18px;
+    transform: translateY(-50%);
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    z-index: 1;
+    transition: opactiy 0.3s;
+}
+.create-user-portal {
+    position: fixed;
+    top: 0;
+    right: -18%;
+    width: 18%;
+    height: 100%;
+    transition: right 0.3s ease;
+    z-index: 2;
+    background-color: var(--create-user-portal-bg-color);
+}
+.create-user-portal.open {
+    right: 0;
+}
+
+/* Create user portal banner */
+.create-user-portal-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 18px 0 6px 0;
+}
+.create-user-portal-close-btn-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 25px;
+    height: 25px;
+}
+.create-user-portal-close-btn {
+    font-size: 24px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

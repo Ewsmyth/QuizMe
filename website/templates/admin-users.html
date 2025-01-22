@@ -1,0 +1,276 @@
+{% extends 'admin-base1.html' %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-create-user-portal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-users-table.css') }}">
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-datatables.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-col-reorder.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1>Admin Users</h1>
+
+  <button id="toggleColumnMenuBtn" class="toggle-column-menu-btn">Column Options</button>
+
+  <div id="toggleColumnMenu" class="toggle-column-menu">
+    <div>
+      <h3>Column Order</h3>
+      <button class="toggle-column-menu-close-btn" id="toggleColumnMenuCloseBtn">x</button>
+    </div>
+    <ul id="toggleColumnMenuList"></ul>
+  </div>
+
+<!-- Table -->
+<table id="myTable" class="display" style="width: 100%;">
+  <thead>
+      <tr>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">User ID</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Profile Picture</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Email</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Role</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">First Name</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Last Name</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Account Status</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Last Login</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">First Login</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Failed Login Attempts</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Password Last Changed</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Created by</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Updated By</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Created At</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="sortingCell_div">
+            <h3 class="sortingCell_title">Updated At</h3>
+            <div class="sortingCell_iconWrapper">
+              <svg class="sortingCell_icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" class="sortIcon__EsveiIHk sortIcon-down__EsveiIHk icon__1pNlrTNT icon-light__1pNlrTNT icon-outline__1pNlrTNT" baseclassname="" twotonedclassname="hidden__1pNlrTNT" fillclassname="hidden__1pNlrTNT" fillwithtwotoneclassname="hidden__1pNlrTNT" stroke="currentColor" stroke-width="0">
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class=""></path>
+                <path d="M12.888 8.596a.5.5 0 0 0 .707-.707l-3.243-3.243a.5.5 0 0 0-.707 0L6.4 7.89a.5.5 0 0 0 .707.707l2.39-2.39v8.959c0 .185.225.335.5.335.277 0 .5-.15.5-.335V6.207l2.39 2.389Z" fill="currentColor" class="hidden__1pNlrTNT"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for users in user %}
+      <tr>
+        <td>{{ users.user_id }}</td>
+        <td>{{ users.profile_pic }}</td>
+        <td>{{ users.email }}</td>
+        <td>{{ users.role.role_name }}</td>
+        <td>{{ users.first_name }}</td>
+        <td>{{ users.last_name }}</td>
+        <td>{{ users.is_active }}</td>
+        <td>{{ users.last_login }}</td>
+        <td>{{ users.first_login }}</td>
+        <td>{{ users.failed_login_attempts }}</td>
+        <td>{{ users.password_last_changed }}</td>
+        <td>{{ users.created_by }}</td>
+        <td>{{ users.updated_by }}</td>
+        <td>{{ users.created_at }}</td>
+        <td>{{ users.updated_at }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+  <button class="create-user-portal-show-btn" id="createUserPortalShowBtn">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+      <path d="M720-400v-120H600v-80h120v-120h80v120h120v80H800v120h-80Zm-360-80q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm80-80h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0-80Zm0 400Z"/>
+    </svg>
+  </button>
+  <div class="create-user-portal" id="createUserPortal">
+    <div class="create-user-portal-banner">
+      <h3>Create New User</h3>
+      <div class="create-user-portal-close-btn-wrapper">
+        <button class="create-user-portal-close-btn" id="createUserPortalCloseBtn">x</button>
+      </div>
+    </div>
+    <form id="createUserForm" action="{{ url_for('admin.admin_create_user') }}" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required placeholder="Email">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required placeholder="Password">
+      </div>
+      <div>
+        <label for="role">Role:</label>
+        <select name="role" id="role" required>
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+      <div>
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" id="first_name" placeholder="First Name">
+      </div>
+      <div>
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name" id="last_name" placeholder="Last Name">
+      </div>
+      <div>
+        <input type="submit" value="Create User">
+      </div>
+    </form>
+    
+    <!-- Message Container -->
+    <div id="message"></div>
+      
+  </div>
+
+  <script src="{{ url_for('static', filename='js/admin-create-user-portal.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/admin-users-table.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/admin-create-user-form-submission.js') }}"></script>
+{% endblock %}

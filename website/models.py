@@ -26,6 +26,10 @@ class User(db.Model, UserMixin):
 
     role = db.relationship('Role', back_populates='users')
 
+    # Flask-Login requires a method to get the unique ID
+    def get_id(self):
+        return str(self.user_id)
+
 class Role(db.Model):
     __tablename__ = 'roles'
     role_id = db.Column(db.Integer, primary_key=True)

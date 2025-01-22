@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-base1.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-account-settings-dropdown.css') }}">
+  {% block css %}{% endblock %}
+  <title>{% block title %}{% endblock %}</title>
+  {% block js %}{% endblock %}
+</head>
+<body {% if current_user and current_user.theme %} class="dark-mode" {% endif %}>
+    <div class="navbar-main">
+      <div class="navbar-left">
+        <div class="navbar-logo">
+          <h3 class="title-banner">QuizMe</h3>
+        </div>
+        <a class="navbar-btn-group navbar-home-div" href="{{ url_for('admin.admin_home') }}">
+          <div class="left-side-logos home-logo-div">
+            <svg class="svg-logo home-logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+              <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/>
+            </svg>
+          </div>
+          <div class="left-bar-btn-label home-text">
+            <h4>Home</h4>
+          </div>
+        </a>
+        <a class="navbar-btn-group navbar-users-div" href="{{ url_for('admin.admin_users') }}">
+          <div class="left-side-logos users-logo-div">
+            <svg class="svg-logo users-logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+              <path d="M0-240v-63q0-43 44-70t116-27q13 0 25 .5t23 2.5q-14 21-21 44t-7 48v65H0Zm240 0v-65q0-32 17.5-58.5T307-410q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780Zm-455-80h311q-10-20-55.5-35T480-370q-55 0-100.5 15T325-320ZM160-440q-33 0-56.5-23.5T80-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-440Zm640 0q-33 0-56.5-23.5T720-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-440Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-80q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm1 240Zm-1-280Z"/>
+            </svg>
+          </div>
+          <div class="left-bar-btn-label users-text">
+            <h4>Users</h4>
+          </div>
+        </a>
+        <a class="navbar-btn-group navbar-home-div" href="{{ url_for('admin.admin_quizzes') }}">
+          <div class="left-side-logos quizzes-logo-div">
+            <svg class="svg-logo quizzes-logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+              <path d="M560-360q17 0 29.5-12.5T602-402q0-17-12.5-29.5T560-444q-17 0-29.5 12.5T518-402q0 17 12.5 29.5T560-360Zm-30-128h60q0-29 6-42.5t28-35.5q30-30 40-48.5t10-43.5q0-45-31.5-73.5T560-760q-41 0-71.5 23T446-676l54 22q9-25 24.5-37.5T560-704q24 0 39 13.5t15 36.5q0 14-8 26.5T578-596q-33 29-40.5 45.5T530-488ZM320-240q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z"/>
+            </svg>
+          </div>
+          <div class="left-bar-btn-label quizzes-text">
+            <h4>Quizzes</h4>
+          </div>
+        </a>
+
+      </div>
+      <div class="navbar-right">
+        <a class="svg-logo more-vert-div" id="accountSettingsDropdownBtn">
+          <svg class="more-vert-logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+            <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  <!-- Popup Div -->
+  <div id="accountSettingsDropdown" class="dropdown-menu">
+    <ul>
+      <li><a href="#">Account Settings</a></li>
+      <li><a href="{{ url_for('auth.auth_logout') }}">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    {% block content %}{% endblock %}
+  </div>
+  <script src="{{ url_for('static', filename='js/admin-account-settings-dropdown.js') }}"></script>
+</body>
+</html>
