@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ quiz_name }}</title>
+  <script src="{{ url_for('static', filename='js/user-api-submit-quiz.js') }}"></script>
+</head>
+<body>
+  <h1>{{ quiz_name }}</h1>
+  <h2>Selected Questions</h2>
+  <form onsubmit="handleSubmit(event, '{{ token }}')">
+    <!-- Include CSRF token as a hidden input -->
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <ul>
+      {% for question in selected_questions %}
+        <li>
+          <h3>{{ question.questionText }}</h3>
+
+          <input type="hidden" name="question_ids[]" value="{{ question._id }}">
+          
+          {% if question.questionType == "multipleChoice" %}
+            <ul>
+              {% for answer in question.answerOptions %}
+                <li>
+                  <label>
+                    <input type="radio" name="question_{{ question._id }}" value="{{ answer.text }}">
+                    {{ answer.text }}
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+          
+          {% elif question.questionType == "multipleAnswer" %}
+            <ul>
+              {% for answer in question.answerOptions %}
+                <li>
+                  <label>
+                    <input type="checkbox" name="question_{{ question._id }}[]" value="{{ answer.text }}">
+                    {{ answer.text }}
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+          
+          {% elif question.questionType == "trueFalse" %}
+            <ul>
+              {% for answer in question.answerOptions %}
+                <li>
+                  <label>
+                    <input type="radio" name="question_{{ question._id }}" value="{{ answer.text }}">
+                    {{ answer.text }}
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+          
+          {% elif question.questionType == "openEnded" %}
+            <textarea name="question_{{ question._id }}" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
+          
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

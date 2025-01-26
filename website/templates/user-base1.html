@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user-base1.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user-account-settings-dropdown.css') }}">
+  {% block css %}{% endblock %}
+  <title>{% block title %}{% endblock %}</title>
+  {% block js %}{% endblock %}
+</head>
+<body {% if current_user and current_user.them %} class="dark-mode" {% endif %}>
+  <div class="navbar-main">
+    <div class="navbar-left">
+      <div class="navbar-logo">
+        <h3 class="title-banner">QuizMe</h3>
+      </div>
+      <a href="{{ url_for('user.user_home') }}" class="navbar-btn-group navbar-home-div">
+        <div class="left-side-logos home-logo-div">
+          <svg class="svg-logo home-logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/>
+          </svg>
+        </div>
+        <div class="left-bar-btn-label home-text">
+          <h4>Home</h4>
+        </div>
+      </a>
+      <a href="{{ url_for('user.user_learning') }}" class="navbar-btn-group navbar-learning-div">
+        <div class="left-side-logos learning-logo-div">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+            <path d="M480-60q-72-68-165-104t-195-36v-440q101 0 194 36.5T480-498q73-69 166-105.5T840-640v440q-103 0-195.5 36T480-60Zm0-104q63-47 134-75t146-37v-276q-73 13-143.5 52.5T480-394q-66-66-136.5-105.5T200-552v276q75 9 146 37t134 75Zm0-436q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-760q0-33-23.5-56.5T480-840q-33 0-56.5 23.5T400-760q0 33 23.5 56.5T480-680Zm0-80Zm0 366Z"/>
+          </svg>
+        </div>
+        <div class="left-bar-btn-label learning-text">
+          <h4>Quizzes</h4>
+        </div>
+      </a>
+    </div>
+    <div class="navbar-right">
+      <a class="account-settings-btn" id="accountSettingsDropdownBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+          <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Popup Div -->
+  <div id="accountSettingsDropdown" class="dropdown-menu">
+    <ul>
+      <li><a href="#">Account Settings</a></li>
+      <li><a href="{{ url_for('auth.auth_logout') }}">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    {% block content %}{% endblock %}
+  </div>
+  <script src="{{ url_for('static', filename='js/user-account-settings-dropdown.js') }}"></script>
+</body>
+</html>

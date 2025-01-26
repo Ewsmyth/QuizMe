@@ -1,0 +1,11 @@
+{% extends 'user-base1.html' %}
+
+{% block title %}{{quiz_id}}{% endblock %}
+
+{% block content %}
+<h1>{{ quiz_name }}</h1>
+<h4>{{ quiz_size }} Questions</h4>
+<p>{{ quiz_description }}</p>
+
+<a href="{{ url_for('user.user_active_quiz', token=token) }}">Start Quiz</a>
+{% endblock %}

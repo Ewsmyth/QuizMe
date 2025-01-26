@@ -1,0 +1,20 @@
+{% extends 'user-base1.html' %}
+
+{% block title %}
+  Learning
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user-learning.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>User Learning Page</h1>
+<div>
+    <input type="text" id="quizSearch" placeholder="Search quizzes..." oninput="filterQuizzes()">
+</div>
+<div id="quizList">
+    <!-- Quizzes will be dynamically loaded here -->
+</div>
+<script src="{{ url_for('static', filename='js/user-search-quizzes.js') }}"></script>
+{% endblock %}

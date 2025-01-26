@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, url_for, request, flash, redirect, abort
-from .models import db, User
+from .models import db, User, Role
 from .utils import bcrypt
 from datetime import datetime
 from flask_login import login_user, current_user, login_required, logout_user
@@ -86,6 +86,64 @@ def auth_login():
         return redirect(url_for('auth.auth_login'))
 
     return render_template('auth-login.html')
+
+@auth.route('/register', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
+def auth_register():
+    if request.method == 'POST':
+        email = request.form.get('email-fr-usr', '').strip()
+        password = request.form.get('password-fr-usr', '').strip()
+        confirm_password = request.form.get('conf-password-fr-usr', '').strip()
+        first_name = request.form.get('first-name-fr-usr', '').strip()
+        last_name = request.form.get('last-name-fr-usr', '').strip()
+
+        # Validate inputs
+        if not email or not password or not confirm_password or not first_name or not last_name:
+            flash('All fields are required.', 'warning')
+            return redirect(url_for('auth.auth_register'))
+
+        if password != confirm_password:
+            flash('Passwords do not match.', 'warning')
+            return redirect(url_for('auth.auth_register'))
+
+        if User.query.filter_by(email=email).first():
+            flash('Email is already in use.', 'warning')
+            return redirect(url_for('auth.auth_register'))
+
+        # Fetch the role_id for the 'user' role
+        user_role = Role.query.filter_by(role_name='user').first()
+        if not user_role:
+            flash('Default user role not found. Please contact an administrator.', 'error')
+            return redirect(url_for('auth.auth_register'))
+
+        # Hash the password
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+        # Create a new user
+        new_user = User(
+            email=email,
+            password=hashed_password,
+            first_name=first_name,
+            last_name=last_name,
+            role_id=user_role.role_id,  # Default to user role
+            is_active=True,
+            password_last_changed=datetime.utcnow()
+        )
+
+        try:
+            # Save the user to the database
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash('Registration successful! Please log in.', 'success')
+            return redirect(url_for('auth.auth_login'))
+        except Exception as e:
+            db.session.rollback()
+            flash('An error occurred during registration. Please try again.', 'error')
+            print(f"Error: {e}")  # Log the error for debugging
+            return redirect(url_for('auth.auth_register'))
+
+    return render_template('auth-register.html')
 
 @auth.route('/change-password/<token>', methods=['GET', 'POST'])
 @login_required  # Ensure the user is authenticated

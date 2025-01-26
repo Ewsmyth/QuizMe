@@ -1,0 +1,41 @@
+.main-content {
+    display: flex;
+}
+.right-side-main-content-wrapper {
+    flex-grow: 1;
+    margin-left: calc(max(18%, 180px));
+    display: flex;
+    flex-direction: column;
+}
+.group-creation-main-wrapper,
+.question-creation-main-wrapper,
+.quiz-creation-main-wrapper {
+    border: 1px solid blue;
+}
+
+/* Question creation styling */
+#dynamicQuestionForm {
+    margin-top: 20px;
+}
+textarea.question-textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+input.question-file-input {
+    display: block;
+    margin-bottom: 10px;
+}
+.option-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+button {
+    margin-top: 10px;
+}
+label {
+    margin-right: 10px;
+}
+/* End of question creation styling */

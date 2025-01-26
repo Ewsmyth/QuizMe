@@ -1,12 +1,76 @@
 {% extends 'admin-base1.html' %}
 
-{% block title %}
-  Dashboard
-{% endblock %}
+{% block title %}Quizzes{% endblock %}
 
 {% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-quizzes-left-sidebar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-quizzes-main-content.css') }}">
 {% endblock %}
 
 {% block content %}
-<h1>Admin Quizzes</h1>
+<div class="left-sidebar-wrapper">
+  
+</div>
+<div class="right-side-main-content-wrapper">
+  <div class="group-creation-main-wrapper">
+    <h2>Create a group to assign questions to</h2>
+    <div class="group-creation-form-wrapper">
+      <form id="groupCreationForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input id="groupCreationNameInput" type="text">
+        <input id="groupCreationSubmitBtn" type="submit">
+      </form>
+    </div>
+  </div>
+  <div class="question-creation-main-wrapper">
+    <h2>Create Questions</h2>
+    <div id="dynamicQuestionForm">
+      <form action="" id="questionCreationForm">
+        <select id="questionTypeSelector">
+          <option value="multipleChoice">Multiple Choice</option>
+          <option value="multipleAnswer">Multiple Answer</option>
+          <option value="trueFalse">True/False</option>
+          <option value="openEnded">Open Ended</option>
+        </select>
+        <div id="questionFormContent"></div>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" id="createQuestionButton">Create Question</button>
+      </form>
+    </div>
+  </div>
+  <div class="quiz-creation-main-wrapper">
+    <h2>Create a Quiz</h2>
+    <form id="quizCreationForm">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      
+      <div>
+        <label for="quizName">Quiz Name:</label>
+        <input type="text" id="quizName" name="quizName" required>
+      </div>
+  
+      <div>
+        <label for="quizDescription">Quiz Description:</label>
+        <textarea id="quizDescription" name="quizDescription" required></textarea>
+      </div>
+  
+      <div>
+        <label for="quizSize">Quiz Size:</label>
+        <input type="number" id="quizSize" name="quizSize" min="1" required>
+      </div>
+  
+      <div>
+        <label for="groupSelector">Select Groups:</label>
+        <select id="groupSelector" name="groups" multiple required>
+          <!-- Options will be populated via JavaScript -->
+        </select>
+      </div>
+  
+      <button type="submit">Create Quiz</button>
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/admin-create-group-ajax.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin-question-creation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin-quiz-creation.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'user-base1.html' %}
+
+{% block content %}
+<h1>Quiz Summary</h1>
+<p><strong>Quiz Name:</strong> {{ quiz_name }}</p>
+<p><strong>User ID:</strong> {{ submission["user_id"] }}</p>
+<p><strong>Submission Time:</strong> {{ submission["timestamp"] }}</p>
+
+<h2>Questions and Answers</h2>
+<ul>
+  {% for question in questions %}
+    <li>
+      <h3>{{ question["questionText"] }}</h3>
+      <p><strong>Answer Options:</strong></p>
+      <ul>
+        {% for option in question["answerOptions"] %}
+          <li>{{ option["text"] }}{% if option.get("isCorrect") %} <strong>(Correct)</strong>{% endif %}</li>
+        {% endfor %}
+      </ul>
+      
+      <p><strong>User Answer:</strong> 
+        {% if question["questionType"] == "multipleAnswer" %}
+          {{ detailed_results[loop.index0]["userAnswer"]|join(", ") }}
+        {% else %}
+          {{ detailed_results[loop.index0]["userAnswer"] }}
+        {% endif %}
+      </p>
+
+      <p><strong>Correct Answer:</strong> 
+        {% if question["questionType"] == "multipleAnswer" %}
+          {{ detailed_results[loop.index0]["correctAnswer"]|join(", ") }}
+        {% else %}
+          {{ detailed_results[loop.index0]["correctAnswer"]|first }}
+        {% endif %}
+      </p>
+    </li>
+  {% endfor %}
+</ul>
+
+<h2>Score</h2>
+<p><strong>Your Score:</strong> {{ users_score }}</p>
+{% endblock %}

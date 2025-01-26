@@ -1,0 +1,9 @@
+.left-sidebar-wrapper {
+    position: fixed;
+    width: 18%;
+    min-width: 180px;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    border-right: 2px solid #cfcfcf;
+}
