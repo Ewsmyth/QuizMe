@@ -13,7 +13,7 @@ from redis import Redis
 csrf = CSRFProtect()  # Initialize CSRF protection
 limiter = Limiter(
     get_remote_address, 
-    default_limits=["200 per day", "50 per hour"],
+    default_limits=["10000 per day", "500 per hour"],
     storage_uri="redis://redis:6379"
 )  # Initialize rate limiter
 
